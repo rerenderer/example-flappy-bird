@@ -8,12 +8,14 @@
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [org.clojure/core.match "0.3.0-alpha4"]
                  [rerenderer "0.1.0-SNAPSHOT"]
-                 [figwheel-sidecar "0.4.1"]]
+                 [figwheel-sidecar "0.4.1"]
+                 [com.cemerick/piggieback "0.2.1"]
+                 [org.clojure/tools.nrepl "0.2.10"]]
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-figwheel "0.4.1"]]
   :source-paths ["src" "script"]
   :cljsbuild {:builds {:main {:source-paths ["src" "../rerenderer/src/"]
-                              :figwheel {:websocket-host "nvbn-XPS13-9333.local"
+                              :figwheel {:websocket-host "192.168.42.214"
                                          :repl false}
                               :compiler {:output-to "resources/public/compiled/main.js"
                                          :output-dir "resources/public/compiled"
@@ -22,4 +24,6 @@
                                          :main "rerenderer-example-flappy-bird.core"
                                          :optimizations :none
                                          :pretty-print false}}}}
-  :figwheel {:nrepl-port 6700})
+  :figwheel {:nrepl-port 7888
+             :repl false}
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
