@@ -15,7 +15,7 @@
             [lein-figwheel "0.4.1"]]
   :source-paths ["src" "script"]
   :cljsbuild {:builds {:main {:source-paths ["src" "../rerenderer/src/"]
-                              :figwheel {:websocket-host "192.168.42.214"
+                              :figwheel {:websocket-host "localhost"
                                          :repl false}
                               :compiler {:output-to "resources/public/compiled/main.js"
                                          :output-dir "resources/public/compiled"
