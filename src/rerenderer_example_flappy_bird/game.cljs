@@ -1,5 +1,5 @@
-(ns rerenderer-example-flappy-bird.game
-  (:require-macros [cljs.core.async.macros :refer [go-loop]])
+(ns ^:figwheel-always rerenderer-example-flappy-bird.game
+  (:require-macros [cljs.core.async.macros :refer [go-loop go]])
   (:require [cljs.core.match :refer-macros [match]]
             [cljs.core.async :refer [<! >! timeout]]))
 
@@ -58,8 +58,9 @@
   [state]
   (when (:running? @state)
     (swap! state update-in [:bird-position] + 5)
+    (swap! state update-in [:bird-y] - 5)
     (let [bird-position (:bird-position @state)]
-      (when (zero? (mod bird-position 800)) ; TODO: consts
+      (when (zero? (mod bird-position 800))                 ; TODO: consts
         (generate-bariers! bird-position
                            (+ 800 bird-position)
                            state)))
@@ -72,12 +73,19 @@
   (swap! state assoc :running? true)
   (generate-bariers! 50 800 state))
 
+(defn on-click
+  [event-ch state]
+  (if (:running? @state)
+    (swap! state update-in [:bird-y] + 30)
+    (go (>! event-ch [:start]))))
+
 (defn subscribe!
   [event-ch state initial-state]
   (start-timer! event-ch)
-  (start! state initial-state)
   (go-loop []
     (match (<! event-ch)
       [:start] (start! state initial-state)
-      [:tick] (move-bird! state))
+      [:tick] (move-bird! state)
+      [:click _] (on-click event-ch state)
+      x (println x))
     (recur)))
