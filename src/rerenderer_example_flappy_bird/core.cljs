@@ -3,7 +3,7 @@
   (:require [cljs.core.async :refer [<! timeout chan]]
             [rerenderer-example-flappy-bird.views :refer [root]]
             [rerenderer-example-flappy-bird.game :refer [subscribe!]]
-            [rerenderer.core :as r]))
+            [rerenderer.core :refer [init!]]))
 
 (enable-console-print!)
 
@@ -15,9 +15,9 @@
              {:position 150 :height 50 :color :green :direction :down}]})
 
 
-(let [state (atom initial-state)
-      event-ch (chan)
-      options {:canvas (.getElementById js/document "canvas")}]
-  (r/init! root state options)
-  (r/listen! event-ch :click options)
-  (subscribe! event-ch state initial-state))
+(init!
+  :root-view root
+  :event-handler subscribe!
+  :events [:click]
+  :state initial-state
+  :canvas (.getElementById js/document "canvas"))

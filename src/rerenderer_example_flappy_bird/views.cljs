@@ -1,8 +1,7 @@
 (ns rerenderer-example-flappy-bird.views
   (:require [cljs.core.async :refer [<! timeout]]
             [cljs.core.match :refer-macros [match]]
-            [rerenderer.primitives :as p]
-            [rerenderer.core :as r]))
+            [rerenderer.primitives :as p]))
 
 (enable-console-print!)
 
@@ -21,6 +20,7 @@
             :x x
             :y (- screen-height y)
             :src sprite-atlas}))
+
 
 (defn background
   "Renders background with passed offset."

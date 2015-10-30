@@ -34,7 +34,6 @@
       (is-barier-here? bariers bird-position bird-y) false
       :else true)))
 
-
 (defn generate-bariers!
   [from to state]
   (let [cleaned-bariers (remove #(< (:position %) (- from 100))
@@ -80,12 +79,12 @@
     (go (>! event-ch [:start]))))
 
 (defn subscribe!
-  [event-ch state initial-state]
+  [event-ch state optons]
   (start-timer! event-ch)
-  (go-loop []
+  (go-loop [initial-state @state]
     (match (<! event-ch)
       [:start] (start! state initial-state)
       [:tick] (move-bird! state)
       [:click _] (on-click event-ch state)
-      x (println x))
-    (recur)))
+      unhandled (println "Unhandled event " unhandled))
+    (recur initial-state)))
