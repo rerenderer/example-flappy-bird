@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.rerenderer.game_of_life">
+
+    <application
+        android:allowBackup="true"
+        android:label="org.rerenderer.game-of-life"
+        android:supportsRtl="true">
+        <activity
+            android:name=".MainActivity"
+            android:label="org.rerenderer.game-of-life">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
